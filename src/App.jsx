@@ -21,7 +21,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center bg-slate-950 text-white px-4">
+    <div className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center bg-slate-950 text-white px-4 ">
       {/* Hero Section */}
       <div className="text-center max-w-3xl space-y-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-500 text-sm font-medium mb-4">

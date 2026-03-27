@@ -40,7 +40,7 @@ export const getCurrentUser = async (emailId) => {
 export const refreshToken = async () => {
   // We manually point to the URL because using apiClient here 
   // might trigger the 401 interceptor logic again.
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8083/api/v1";
+  const baseUrl = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
   
   const response = await axios.post(
     `${baseUrl}/auth/refresh`, 

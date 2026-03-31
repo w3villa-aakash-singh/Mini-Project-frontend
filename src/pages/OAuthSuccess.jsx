@@ -13,7 +13,7 @@ function OAuthSuccess() {
         const data = await refreshToken();
         if (data.accessToken) {
           login(data.user, data.accessToken);
-          navigate("/dashboard");
+          navigate("/profile");
         }
       } catch (err) { navigate("/login"); }
     };

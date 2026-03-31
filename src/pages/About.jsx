@@ -29,7 +29,7 @@ const About = () => {
     <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-300">
       <div className="container mx-auto py-12 px-4">
         <div className="max-w-4xl mx-auto space-y-8">
-          
+
           {/* Header Section */}
           <section className="text-center space-y-4">
             <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">

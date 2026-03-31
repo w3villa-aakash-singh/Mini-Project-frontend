@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from "react-router";
+import React, { useState, useEffect } from 'react';
+import { NavLink, useNavigate, useSearchParams } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,6 +17,17 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    // STEP 5: Check for verification success from email link redirect
+    useEffect(() => {
+        if (searchParams.get("verified") === "true") {
+            toast.success("Email successfully verified! Identity Confirmed.");
+        }
+        if (searchParams.get("error") === "invalid_code") {
+            toast.error("Verification link expired or invalid.");
+        }
+    }, [searchParams]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -28,13 +39,25 @@ const Login = () => {
         setLoading(true);
         try {
             const res = await loginUser(loginData);
+
+            // Assuming your API returns { user: {...}, accessToken: "..." }
             const data = res.data || res;
+
             login(data.user, data.accessToken);
             toast.success("Identity Verified. Portal Access Granted.");
-            navigate("/dashboard");
+            navigate("/profile");
         } catch (err) {
-            toast.error("Invalid credentials. System rejected access.");
-        } finally { setLoading(false); }
+            // Check if backend sent a "Disabled" or "Not Verified" message
+            const errorMessage = err.response?.data?.message || err.response?.data;
+
+            if (err.response?.status === 403 || (typeof errorMessage === 'string' && errorMessage.includes("verified"))) {
+                toast.error("Access Denied: Please verify your email first.");
+            } else {
+                toast.error("Invalid credentials. System rejected access.");
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -60,6 +83,7 @@ const Login = () => {
                         <Input
                             name="email"
                             type="email"
+                            value={loginData.email}
                             placeholder="user@example.com"
                             onChange={handleInputChange}
                             className="bg-slate-950/50 border-slate-800 text-white h-12 focus-visible:ring-red-600 focus-visible:ring-1"
@@ -74,6 +98,7 @@ const Login = () => {
                         <Input
                             name="password"
                             type="password"
+                            value={loginData.password}
                             placeholder="••••••••"
                             onChange={handleInputChange}
                             className="bg-slate-950/50 border-slate-800 text-white h-12 focus-visible:ring-red-600 focus-visible:ring-1"
@@ -86,7 +111,7 @@ const Login = () => {
                         type="submit"
                         className="w-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-black py-7 uppercase tracking-widest shadow-xl shadow-red-900/20 active:scale-[0.98] transition-all"
                     >
-                        {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : "Access Dashboard"}
+                        {loading ? <Loader2 className="h-5 w-5 animate-spin mx-auto" /> : "Access Profile"}
                     </Button>
                 </form>
 

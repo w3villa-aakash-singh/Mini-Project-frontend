@@ -14,6 +14,7 @@ import { AuthProvider } from './contex/AuthContex';
 import { Navigate } from "react-router";
 import { useAuth } from './contex/AuthContex';
 import OAuthSuccess from './pages/OAuthSuccess';
+import PlansPage from './pages/users/PlansPage';
 
 const ProtectedRoute = ({ children }) => {
   const { authStatus, loading } = useAuth();
@@ -43,15 +44,25 @@ createRoot(document.getElementById('root')).render(
           <Route path="/services" element={<Services />} />
           <Route path="/about" element={<About />} />
           <Route
-            path="/dashboard/*"
+            path="/profile/*"
             element={
               <ProtectedRoute>
                 <Userlayout />
               </ProtectedRoute>
             }
           />
+
+          <Route
+      path="/plans"
+      element={
+        <ProtectedRoute>
+          <PlansPage /> 
+        </ProtectedRoute>
+      }
+    />
           <Route path="oauth/success" element={<OAuthSuccess />} />
           <Route path="/oauth/failure" element={<div className="text-white">Auth Failed. Please try again.</div>} />
+          
 
         </Route>
       </Routes>

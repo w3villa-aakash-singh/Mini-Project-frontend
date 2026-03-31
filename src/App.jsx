@@ -12,8 +12,8 @@ function App() {
 
   const handleGetStarted = () => {
     if (isLoggedIn) {
-      // If logged in, go to Plan Status / Dashboard as per requirements [cite: 16, 50]
-      navigate("/dashboard"); 
+      // If logged in, go to Plan Status / profile as per requirements [cite: 16, 50]
+      navigate("/profile"); 
     } else {
       // If not, go to login [cite: 42]
       navigate("/login");

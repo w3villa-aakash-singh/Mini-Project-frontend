@@ -1,8 +1,13 @@
 {
+  "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/oauth/success",
+      "destination": "/index.html"
+    },
+    {
       "source": "/(.*)",
-      "destination": "/"
+      "destination": "/index.html"
     }
   ]
 }

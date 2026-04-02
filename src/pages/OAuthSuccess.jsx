@@ -1,35 +1,36 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
+import { useAuth } from "../contex/AuthContex"; // 🚩 Corrected path
 
 const OAuthSuccess = () => {
   const navigate = useNavigate();
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const { refreshUser } = useAuth(); // 🚩 Use the context function
 
   useEffect(() => {
     const handleOAuth = async () => {
       try {
-        const res = await axios.post(
-          `${API_BASE_URL}/api/v1/auth/refresh`,
-          {},
-          { withCredentials: true }
-        );
-
-        const { accessToken, user } = res.data;
-
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("user", JSON.stringify(user));
-
+        // This function already handles axios, localStorage, and SETTING REACT STATE
+        await refreshUser();
+        
+        // Once state is updated, move to profile
         navigate("/profile");
       } catch (e) {
+        console.error("OAuth Refresh Error:", e);
         navigate("/login");
       }
     };
 
     handleOAuth();
-  }, []);
+  }, [refreshUser, navigate]);
 
-  return <div className="text-white text-center mt-10">Logging you in...</div>;
+  return (
+    <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center text-white">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600 mb-4"></div>
+      <h2 className="text-xl font-black tracking-widest uppercase italic">
+        Finalizing <span className="text-red-600">Secure</span> Login
+      </h2>
+    </div>
+  );
 };
 
 export default OAuthSuccess;

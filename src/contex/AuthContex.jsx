@@ -56,21 +56,24 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // ✅ LOGIN FUNCTION
-  const login = async (loginData) => {
-    const res = await axios.post(
-      `${API_BASE_URL}/api/v1/auth/login`,
-      loginData,
-      { withCredentials: true }
-    );
+  // ✅ Corrected Login Function in AuthProvider
+const login = async (loginData) => {
+  // Use your existing loginData to make the request
+  const res = await axios.post(
+    `${API_BASE_URL}/api/v1/auth/login`,
+    loginData, // Pass the email/password object here
+    { withCredentials: true }
+  );
 
-    const { accessToken, user } = res.data;
+  const { accessToken, user } = res.data;
 
-    setUser(user);
-    setAuthStatus(true);
-
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("user", JSON.stringify(user));
-  };
+  setUser(user);
+  setAuthStatus(true);
+  localStorage.setItem("accessToken", accessToken);
+  localStorage.setItem("user", JSON.stringify(user));
+  
+  return res.data; // Return this so Login.jsx can handle the navigate
+};
 
   // ✅ LOGOUT FUNCTION
   const logout = async () => {

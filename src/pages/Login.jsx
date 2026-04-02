@@ -35,30 +35,20 @@ const Login = () => {
     };
 
     const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            const res = await loginUser(loginData);
-
-            // Assuming your API returns { user: {...}, accessToken: "..." }
-            const data = res.data || res;
-
-            login(data.user, data.accessToken);
-            toast.success("Identity Verified. Portal Access Granted.");
-            navigate("/profile");
-        } catch (err) {
-            // Check if backend sent a "Disabled" or "Not Verified" message
-            const errorMessage = err.response?.data?.message || err.response?.data;
-
-            if (err.response?.status === 403 || (typeof errorMessage === 'string' && errorMessage.includes("verified"))) {
-                toast.error("Access Denied: Please verify your email first.");
-            } else {
-                toast.error("Invalid credentials. System rejected access.");
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
+    e.preventDefault();
+    setLoading(true);
+    try {
+        // Just call the context login directly
+        await login(loginData); 
+        
+        toast.success("Identity Verified. Portal Access Granted.");
+        navigate("/profile");
+    } catch (err) {
+        toast.error("Invalid credentials.");
+    } finally {
+        setLoading(false);
+    }
+};
 
     return (
         <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center py-12 px-4 selection:bg-red-500/30">

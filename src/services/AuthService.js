@@ -6,7 +6,8 @@ import axios from "axios";
  */
 export const registerUser = async (signupData) => {
   const response = await apiClient.post(`/auth/register`, signupData);
-  return response.data;
+  // Return only the string message so toast/UI can handle it easily
+  return response.data.message || response.data; 
 };
 
 /**

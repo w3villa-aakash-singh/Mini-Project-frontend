@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from "react-router";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useAuth } from "../contex/AuthContex"; // Updated Import
 import {
   DropdownMenu,
@@ -16,6 +17,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { user, authStatus, logout, loading } = useAuth();
   const [isMounted, setIsMounted] = useState(false);
+
 
   useEffect(() => setIsMounted(true), []);
 
@@ -49,12 +51,19 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <div className="flex items-center outline-none cursor-pointer group">
-                  <img src={user?.image ?
-                    user.image
-                      .replace("gateway.storjshare.io", "link.storjshare.io") // Changes Private -> Public   
-                      .replace("/user-profile/", "/raw/jvfofhsm5xn47i3d6o57pf7tr53q/user-profile/") // Adds your Share Key and RAW path
-                    : user?.picture
-                  } alt="Avatar" className="h-10 w-10 rounded-full border-2 border-slate-700 group-hover:border-red-600 transition-all object-cover" />
+                  <Avatar className="h-10 w-10 border-2 border-slate-700 group-hover:border-red-600 transition-all">
+                    <AvatarImage
+                      src={
+                        user?.image
+                          ? user.image // This is now the clean Supabase URL from your DB
+                          : user?.picture // Fallback for OAuth2 (Google/GitHub) images
+                      }
+                      alt={user?.name}
+                    />
+                    <AvatarFallback className="bg-slate-800 text-white">
+                      {user?.name?.charAt(0)?.toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-64 mt-2 bg-slate-900 border-gray-800 text-slate-200">
@@ -67,8 +76,10 @@ const Navbar = () => {
                 <DropdownMenuSeparator className="bg-gray-800" />
                 <DropdownMenuItem onClick={() => navigate("/profile")}><User className="mr-2 h-4 w-4" /> Profile</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate("/dashboard")}><LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard</DropdownMenuItem>
-                {user.role === "ADMIN" && (
-                  <DropdownMenuItem onClick={() => navigate("/admin/users")} className="text-blue-400"><Settings className="mr-2 h-4 w-4" /> Admin</DropdownMenuItem>
+                {user?.roles?.some(r => r.name === "ROLE_ADMIN") && (
+                  <DropdownMenuItem onClick={() => navigate("/admin/users")}>
+                    <Settings className="mr-2 h-4 w-4 text-blue-400" />Admin Panel
+                  </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator className="bg-gray-800" />
                 <DropdownMenuItem onClick={handleLogout} className="text-red-500"><LogOut className="mr-2 h-4 w-4" /> Log out</DropdownMenuItem>

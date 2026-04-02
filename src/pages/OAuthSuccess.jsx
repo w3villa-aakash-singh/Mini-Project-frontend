@@ -1,26 +1,35 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router";
-import { useAuth } from "../contex/AuthContex";
-import { refreshToken } from "@/services/AuthService";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function OAuthSuccess() {
-  const { login } = useAuth();
+const OAuthSuccess = () => {
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    const init = async () => {
+    const handleOAuth = async () => {
       try {
-        const data = await refreshToken();
-        if (data.accessToken) {
-          login(data.user, data.accessToken);
-          navigate("/profile");
-        }
-      } catch (err) { navigate("/login"); }
+        const res = await axios.post(
+          `${API_BASE_URL}/api/v1/auth/refresh`,
+          {},
+          { withCredentials: true }
+        );
+
+        const { accessToken, user } = res.data;
+
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("user", JSON.stringify(user));
+
+        navigate("/profile");
+      } catch (e) {
+        navigate("/login");
+      }
     };
-    init();
+
+    handleOAuth();
   }, []);
 
-  return <div className="h-screen bg-slate-950 flex items-center justify-center text-white">Verifying...</div>;
-}
+  return <div className="text-white text-center mt-10">Logging you in...</div>;
+};
 
 export default OAuthSuccess;

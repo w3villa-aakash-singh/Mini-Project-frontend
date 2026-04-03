@@ -40,22 +40,17 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      // Hits /api/v1/auth/register
       const responseMessage = await registerUser(data);
-
-      // Backend returns "Registration successful! Verification email sent."
-      toast.success(responseMessage || "Verification Email Sent. Please check your inbox.");
-      
-      setData({ name: "", email: "", password: "" });
-      
-      // Redirect to login to wait for verification
+      toast.success(responseMessage || "Verification Email Sent.");
       navigate("/login");
     } catch (error) {
-      toast.error(error.response?.data || "Registration failed. System rejected credentials.");
+      // 🚩 FIX: Safely extract the error message string
+      const errorMsg = error.response?.data?.message || error.response?.data || "System rejected credentials.";
+      toast.error(typeof errorMsg === 'string' ? errorMsg : "Registration conflict detected.");
     } finally {
       setLoading(false);
     }
-  };
+};
 
   const handleSocialLogin = (provider) => {
     window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/${provider}`;

@@ -21,8 +21,6 @@ const VerifyEmail = () => {
       }
 
       try {
-        // Hits http://localhost:8080/api/v1/auth/verify
-        // 🚩 Ensure /api/v1 is included if your controller uses it
 const response = await axios.get(`${API_BASE_URL}/api/v1/auth/verify?code=${code}`);
         
         toast.success(typeof response.data === 'string' ? response.data : "Account Verified!");

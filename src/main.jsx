@@ -19,6 +19,7 @@ import AdminUsers from './pages/admin/AdminUsers';
 // import AdminPlans from './pages/admin/AdminPlans';
 
 import { AuthProvider, useAuth } from './contex/AuthContex';
+import VerifyEmail from './pages/verifyAccount';
 
 
 // 🔒 Protected Route
@@ -142,6 +143,7 @@ createRoot(document.getElementById('root')).render(
 
             {/* 🔗 OAuth */}
             <Route path="oauth/success" element={<OAuthSuccess />} />
+            <Route path="/verify" element={<VerifyEmail />} />
             <Route
               path="/oauth/failure"
               element={<div className="text-white">Auth Failed</div>}

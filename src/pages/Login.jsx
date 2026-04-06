@@ -107,10 +107,12 @@ const Login = () => {
 
                 <div className="mt-10">
                     <div className="relative">
-                        <div className="absolute inset-0 flex items-center"><Separator className="bg-slate-800" /></div>
-                        <div className="relative flex justify-center text-[10px] uppercase font-bold tracking-widest">
-                            <span className="bg-[#0b1322] px-4 text-slate-500 font-mono">SSO Gateway</span>
-                        </div>
+                        <p className="mt-10 text-center text-xs text-slate-500 font-medium">
+                    New operative?{' '}
+                    <NavLink to="/signup" className="text-red-500 font-black hover:text-red-400 underline decoration-red-900 underline-offset-8 transition-all">
+                        Register Account
+                    </NavLink>
+                </p>
                     </div>
 
                     <div className="mt-8 grid grid-cols-2 gap-4">
@@ -132,13 +134,6 @@ const Login = () => {
                         </Button>
                     </div>
                 </div>
-
-                <p className="mt-10 text-center text-xs text-slate-500 font-medium">
-                    New operative?{' '}
-                    <NavLink to="/signup" className="text-red-500 font-black hover:text-red-400 underline decoration-red-900 underline-offset-8 transition-all">
-                        Register Account
-                    </NavLink>
-                </p>
             </div>
         </div>
     );

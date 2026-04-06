@@ -7,19 +7,19 @@ const About = () => {
   const features = [
     {
       title: "Social Signup & Merge",
-      description: "Sign up via Google or Facebook. Existing accounts with the same email are merged automatically[cite: 11, 15].",
+      description: "Sign up via Google or Facebook. Existing accounts with the same email are merged automatically.",
       icon: <ShieldCheck className="w-5 h-5 text-blue-500" />,
       tag: "Auth"
     },
     {
       title: "Storj & Google Maps",
-      description: "Profile pictures are stored on Storj [cite: 57, 164], and addresses use Google Maps auto-suggestions[cite: 65, 162].",
+      description: "Profile pictures are stored on Storj, and addresses use Google Maps auto-suggestions.",
       icon: <Globe className="w-5 h-5 text-green-500" />,
       tag: "Cloud"
     },
     {
       title: "Time-Limited Plans",
-      description: "Choose 1h, 6h, or 12h plans. Access is automatically revoked by a cron job upon expiration[cite: 100, 148].",
+      description: "Choose 1h, 6h, or 12h plans. Access is automatically revoked by a cron job upon expiration.",
       icon: <Zap className="w-5 h-5 text-yellow-500" />,
       tag: "Payments"
     }
@@ -36,7 +36,7 @@ const About = () => {
               Project Overview
             </h1>
             <p className="text-xl text-muted-foreground dark:text-slate-400">
-              Detailed requirements for user management and secure access control[cite: 3, 4].
+              Detailed requirements for user management and secure access control.
             </p>
           </section>
 
@@ -61,13 +61,13 @@ const About = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 dark:text-slate-100">
                 <Info className="w-5 h-5 text-blue-400" />
-                Administrative Controls [cite: 102]
+                Administrative Controls 
               </CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-slate-600 dark:text-slate-400 space-y-2">
-              <p>• Only verified users can access the dashboard after login[cite: 50].</p>
-              <p>• Admins have exclusive access to user management, search, and pagination[cite: 112, 117].</p>
-              <p>• Plan expiration is handled via a server-side cron job to maintain data integrity[cite: 149].</p>
+              <p>• Only verified users can access the dashboard after login.</p>
+              <p>• Admins have exclusive access to user management, search, and pagination.</p>
+              <p>• Plan expiration is handled via a server-side cron job to maintain data integrity.</p>
             </CardContent>
           </Card>
         </div>

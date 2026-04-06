@@ -75,7 +75,6 @@ const Navbar = () => {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-gray-800" />
                 <DropdownMenuItem onClick={() => navigate("/profile")}><User className="mr-2 h-4 w-4" /> Profile</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/dashboard")}><LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard</DropdownMenuItem>
                 {user?.roles?.some(r => r.name === "ROLE_ADMIN") && (
                   <DropdownMenuItem onClick={() => navigate("/admin/users")}>
                     <Settings className="mr-2 h-4 w-4 text-blue-400" />Admin Panel

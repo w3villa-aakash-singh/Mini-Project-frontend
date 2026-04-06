@@ -12,10 +12,10 @@ function App() {
 
   const handleGetStarted = () => {
     if (isLoggedIn) {
-      // If logged in, go to Plan Status / profile as per requirements [cite: 16, 50]
+      // If logged in, go to Plan Status / profile as per requirements
       navigate("/profile"); 
     } else {
-      // If not, go to login [cite: 42]
+      // If not, go to login 
       navigate("/login");
     }
   };
@@ -64,17 +64,17 @@ function App() {
         <div className="p-6 rounded-2xl bg-slate-900/50 border border-white/5">
           <CheckCircle2 className="text-red-500 mb-3" />
           <h3 className="font-bold text-lg">Social Merge</h3>
-          <p className="text-slate-400 text-sm">Seamlessly link Google or Facebook to your existing account[cite: 11].</p>
+          <p className="text-slate-400 text-sm">Seamlessly link Google or Facebook to your existing account.</p>
         </div>
         <div className="p-6 rounded-2xl bg-slate-900/50 border border-white/5">
           <Zap className="text-red-500 mb-3" />
           <h3 className="font-bold text-lg">Time-Limited Plans</h3>
-          <p className="text-slate-400 text-sm">Automated cron jobs manage your 1h, 6h, or 12h access levels[cite: 100].</p>
+          <p className="text-slate-400 text-sm">Automated cron jobs manage your 1h, 6h, or 12h access levels.</p>
         </div>
         <div className="p-6 rounded-2xl bg-slate-900/50 border border-white/5">
           {/* <MapPin className="text-red-500 mb-3" /> */}
           <h3 className="font-bold text-lg">Smart Profiles</h3>
-          <p className="text-slate-400 text-sm">Auto-suggest addresses and display your profile location on a map[cite: 65].</p>
+          <p className="text-slate-400 text-sm">Auto-suggest addresses and display your profile location on a map.</p>
         </div>
       </div>
     </div>

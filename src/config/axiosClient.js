@@ -13,7 +13,20 @@ const axiosClient = axios.create({
 // ✅ REQUEST INTERCEPTOR
 // =========================
 axiosClient.interceptors.request.use((config) => {
-  const token = useAuth.getState().accessToken;
+  let token = useAuth.getState().accessToken;
+
+  // 🔥 fallback if Zustand not hydrated yet
+  if (!token) {
+    try {
+      const raw = localStorage.getItem("app_state");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        token = parsed?.state?.accessToken;
+      }
+    } catch (e) {
+      console.error("Token parse error", e);
+    }
+  }
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

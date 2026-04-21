@@ -22,8 +22,11 @@ const OAuthSuccess = () => {
 
         if (!token) throw new Error("No token");
 
+        const userRes = await axiosClient.get("/auth/me");
+
         setState({
           accessToken: token,
+          user: userRes.data.user,
           authStatus: true,
         });
 

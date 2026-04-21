@@ -17,12 +17,13 @@ const OAuthSuccess = () => {
     const handleOAuth = async () => {
       try {
         // ✅ Call refresh API
-        const res = await refreshToken();
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");
 
-        // ✅ Update Zustand manually
+        if (!token) throw new Error("No token");
+
         setState({
-          accessToken: res.accessToken,
-          user: res.user,
+          accessToken: token,
           authStatus: true,
         });
 

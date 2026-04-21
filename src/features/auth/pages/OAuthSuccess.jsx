@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import useAuth from "../store/store.js";
-import axiosClient from "@/lib/axiosClient"; // ✅ make sure path is correct
+import axiosClient from "../../../config/axiosClient.js"; // ✅ make sure path is correct
 
 const OAuthSuccess = () => {
   const navigate = useNavigate();

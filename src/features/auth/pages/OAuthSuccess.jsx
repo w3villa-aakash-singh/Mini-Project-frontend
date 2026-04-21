@@ -1,44 +1,52 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-
-// ✅ Zustand
 import useAuth from "../store/store.js";
-
-// ✅ Service
-import { refreshToken } from "@/features/auth/services/AuthService.js";
+import axiosClient from "@/lib/axiosClient"; // ✅ make sure path is correct
 
 const OAuthSuccess = () => {
   const navigate = useNavigate();
-
-  const setAuth = useAuth((state) => state.login); // reuse login logic
   const setState = useAuth.setState;
 
   useEffect(() => {
     const handleOAuth = async () => {
       try {
-        // ✅ Call refresh API
         const params = new URLSearchParams(window.location.search);
         const token = params.get("token");
 
         if (!token) throw new Error("No token");
 
-        const userRes = await axiosClient.get("/auth/me");
-
+        // ✅ Step 1: store access token
         setState({
           accessToken: token,
-          user: userRes.data.user,
           authStatus: true,
         });
 
-        navigate("/profile");
+        // ✅ Step 2: wait briefly, then fetch user
+        setTimeout(async () => {
+          try {
+            const userRes = await axiosClient.get("/auth/me");
+
+            // ✅ Step 3: merge user into state (don't overwrite)
+            setState((prev) => ({
+              ...prev,
+              user: userRes.data.user,
+            }));
+
+            navigate("/profile");
+          } catch (e) {
+            console.error("User fetch failed:", e);
+            navigate("/login");
+          }
+        }, 400);
+
       } catch (e) {
-        console.error("OAuth Refresh Error:", e);
+        console.error("OAuth error:", e);
         navigate("/login");
       }
     };
 
     handleOAuth();
-  }, [navigate, setAuth]);
+  }, [navigate, setState]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center text-gray-900">
